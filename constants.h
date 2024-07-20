@@ -36,7 +36,7 @@ const float vertices_plane[] = {
     -1.0f, -1.0f, -1.1f,  // 4
     1.0f,  -1.0f, -1.1f,  // 5
     1.0f,  1.0f,  -1.1f,  // 6
-    -1.0f, 1.0f,  -1.0f,  // 7
+    -1.0f, 1.0f,  -1.1f,  // 7
 };
 
 const GLuint indices_cube[] = {0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7,
