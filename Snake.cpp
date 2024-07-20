@@ -25,8 +25,9 @@ constexpr bool floatEquality(float a, float b, float e) {
 
 namespace snake {
 
-Snake::Snake(glm::vec3 startTransHead, float scale_factor, float increment_val,
-             float borderx, float borderz, movement startDir)
+Snake::Snake(glm::vec3 startTransHead, int startingSize, float scale_factor,
+             float increment_val, float borderx, float borderz,
+             movement startDir)
     : scaleFactor{scale_factor},
       increment{increment_val},
       borderx{borderx},
@@ -34,6 +35,7 @@ Snake::Snake(glm::vec3 startTransHead, float scale_factor, float increment_val,
       generalDirection{startDir} {
   SnakePart *head = new SnakePart(startTransHead, scale_factor, startDir);
   parts.push_back(head);
+  for (int i = 1; i < startingSize; i++) addPart();
 }
 
 SELF &Snake::addPart() {
@@ -54,7 +56,7 @@ SELF &Snake::updateDirection(movement newHeadDir) {
   return *this;
 }
 
-SELF &Snake::move(float e) {
+SELF &Snake::move() {
   parts[0]->move(increment, borderx, borderz);
   movement old = parts[0]->getDirection();
   generalDirection = old;
@@ -82,10 +84,20 @@ bool Snake::selfCollision() const {
   return false;
 }
 
-bool Snake::pointCollision(const glm::vec3 &pointTrans) const {
+bool Snake::pointCollisionHead(const glm::vec3 &pointTrans) const {
   glm::vec3 headTrans = parts[0]->getTrans();
   return (floatEquality(headTrans.x, pointTrans.x, 0.001f) &&
           floatEquality(headTrans.z, pointTrans.z, 0.001f));
+}
+
+bool Snake::pointCollisionAll(const glm::vec3 &pointTrans) const {
+  for (auto *part : parts) {
+    glm::vec3 trans = part->getTrans();
+    if (floatEquality(trans.x, pointTrans.x, 0.001f) &&
+        floatEquality(trans.z, pointTrans.z, 0.001f))
+      return true;
+  }
+  return false;
 }
 
 Snake::~Snake() {

@@ -14,20 +14,22 @@ class Snake {
   movement generalDirection;
 
  public:
-  Snake(glm::vec3 startTransHead, float scale_factor, float increment_val,
-        float borderx, float borderz, movement startDir = movement::DOWN);
+  Snake(glm::vec3 startTransHead, int startingSize, float scale_factor,
+        float increment_val, float borderx, float borderz,
+        movement startDir = movement::DOWN);
 
   SELF &addPart();
 
   SELF &updateDirection(movement newHeadDir);
 
-  SELF &move(float e = 0.01f);
+  SELF &move();
 
   SELF &draw(GLuint shaderID, const std::string &uniformName);
 
   bool selfCollision() const;
 
-  bool pointCollision(const glm::vec3 &pointTrans) const;
+  bool pointCollisionHead(const glm::vec3 &pointTrans) const;
+  bool pointCollisionAll(const glm::vec3 &pointTrans) const;
 
   ~Snake();
 };
