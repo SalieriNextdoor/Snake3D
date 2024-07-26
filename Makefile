@@ -5,7 +5,7 @@ LDFLAGS = -lGL -lGLU -lglfw -lm -lXrandr -lXi -lX11 -lXxf86vm -lpthread -ldl -lX
 
 INCLUDES = shader.h texture.h camera.h SnakePart.h Snake.h Point.h Score.h Shape3D.h constants.h FontRenderer.h
 
-game: %: %.o glad.o process_input.o SnakePart.o Snake.o Point.o Score.o Shape3D.o Libs/stb_image.cpp
+game: %: %.o glad.o stb_image.o process_input.o SnakePart.o Snake.o Point.o Score.o Shape3D.o FontRenderer.o
 	$(CXX) $^ $(CXXFLAGS) $(LDFLAGS) -o $@
 
 %.o: %.cpp $(INCLUDES)

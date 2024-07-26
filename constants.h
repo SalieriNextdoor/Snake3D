@@ -83,8 +83,7 @@ const float vertices_quad[] = {
     0.2f * settingConstants::AR,
     0.0f,
     0.0f,
-    1.0f  // tl
-};
+    1.0f};
 
 const GLuint indices_quad[] = {
     0, 1, 3,  // first triangle
