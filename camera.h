@@ -54,7 +54,6 @@ class Camera {
 
   // move straight; speed > 0 frontward, otherwise backward
   SELF& straight(float speed) {
-    // position += glm::normalize(glm::vec3(front.x, 0.0f, front.z)) * speed;
     position += front * speed;
     return *this;
   }
@@ -62,7 +61,6 @@ class Camera {
   // move sideways; speed > 0 right, otherwise left
   SELF& strafe(float speed) {
     auto stp = glm::normalize(glm::cross(front, up));
-    // position += glm::normalize(glm::vec3(stp.x, 0.0f, stp.z)) * speed;
     position += stp * speed;
     return *this;
   }
