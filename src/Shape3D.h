@@ -12,8 +12,6 @@ class Shape3D {
   Shape3D(GLsizeiptr data_size, const void* data, GLsizeiptr indices_size,
           const void* indices);
 
-  Shape3D(const Shape3D&) = delete;
-
   SELF& bind();
 
   ~Shape3D();

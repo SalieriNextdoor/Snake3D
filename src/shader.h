@@ -15,8 +15,6 @@ class Shader {
  public:
   unsigned int ID;
 
-  Shader(const Shader &) = delete;
-
   Shader(const char *vertexPath, const char *fragmentPath) {
     std::string vertexCode;
     std::string fragmentCode;
@@ -92,7 +90,11 @@ class Shader {
   void setFloat(const std::string &name, float value) const {
     glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
   }
-  void setv4fv(const std::string &name, glm::vec3 vec) const {
+  void setv2fv(const std::string &name, glm::vec2 vec) const {
+    glUniform2fv(glGetUniformLocation(ID, name.c_str()), 1,
+                 glm::value_ptr(vec));
+  }
+  void setv4fv(const std::string &name, glm::vec4 vec) const {
     glUniform4fv(glGetUniformLocation(ID, name.c_str()), 1,
                  glm::value_ptr(vec));
   }

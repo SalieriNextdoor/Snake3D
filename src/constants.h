@@ -16,10 +16,10 @@ const double delay = 0.5f;
 
 namespace fontConstants {
 
-const int bitmap_width = 256;
-const int bitmap_height = 256;
-const int font_char_width = 20;
-const int font_char_height = 20;
+const int bitmap_width = 1024;
+const int bitmap_height = 512;
+const int font_char_width = 80;
+const int font_char_height = 80;
 const int number_seq_start = 16;
 const int letter_seq_start = 33;
 

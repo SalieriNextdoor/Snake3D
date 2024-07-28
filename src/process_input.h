@@ -9,7 +9,7 @@
 
 #include "camera.h"
 
-void processInput(GLFWwindow* window);
+bool processInput(GLFWwindow* window);
 GLFWwindow* initializeWindow(const unsigned int width,
                              const unsigned int height, const char* title);
 

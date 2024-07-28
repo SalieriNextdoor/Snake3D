@@ -15,9 +15,10 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
   window_width = width;
 }
 
-void processInput(GLFWwindow* window) {
+bool processInput(GLFWwindow* window) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     glfwSetWindowShouldClose(window, true);
+  if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) return true;
 
   if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
     current = snake::movement::LEFT;
@@ -27,6 +28,8 @@ void processInput(GLFWwindow* window) {
     current = snake::movement::UP;
   if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
     current = snake::movement::DOWN;
+
+  return false;
 }
 
 GLFWwindow* initializeWindow(const unsigned int width,

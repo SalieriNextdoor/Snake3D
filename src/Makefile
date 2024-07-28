@@ -1,11 +1,11 @@
 CC = gcc
 CXX = g++
-CXXFLAGS = -Wall -g
+CXXFLAGS = -Wall -Werror -g
 LDFLAGS = -lGL -lGLU -lglfw -lm -lXrandr -lXi -lX11 -lXxf86vm -lpthread -ldl -lXinerama -lXcursor
 
-INCLUDES = shader.h texture.h camera.h SnakePart.h Snake.h Point.h Score.h Shape3D.h constants.h FontRenderer.h
+INCLUDES = shader.h texture.h camera.h SnakePart.h Snake.h Point.h Score.h Shape3D.h constants.h FontRenderer.h gameHandler.h
 
-game: %: %.o glad.o stb_image.o process_input.o SnakePart.o Snake.o Point.o Score.o Shape3D.o FontRenderer.o
+game: %: %.o glad.o stb_image.o process_input.o SnakePart.o Snake.o Point.o Score.o Shape3D.o FontRenderer.o gameHandler.o
 	$(CXX) $^ $(CXXFLAGS) $(LDFLAGS) -o $@
 
 %.o: %.cpp $(INCLUDES)
