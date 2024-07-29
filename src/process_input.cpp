@@ -15,21 +15,20 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
   window_width = width;
 }
 
-bool processInput(GLFWwindow* window) {
+void processInput(GLFWwindow* window, bool gameOn) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     glfwSetWindowShouldClose(window, true);
-  if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) return true;
 
-  if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-    current = snake::movement::LEFT;
-  if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-    current = snake::movement::RIGHT;
-  if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-    current = snake::movement::UP;
-  if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-    current = snake::movement::DOWN;
-
-  return false;
+  else if (gameOn) {
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+      current = snake::movement::LEFT;
+    else if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+      current = snake::movement::RIGHT;
+    else if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+      current = snake::movement::UP;
+    else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+      current = snake::movement::DOWN;
+  }
 }
 
 GLFWwindow* initializeWindow(const unsigned int width,

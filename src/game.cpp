@@ -72,8 +72,9 @@ int main() {
     FontRenderer font{"./images/font.bmp", 0,          GL_RGB,
                       quadFontShape,       fontShader, "texture1"};
 
-    while (initializeGame(window, shaderProgram, planeShape, snakeShape,
-                          pointShape, font));
+    if (renderStartScreen(window, font))
+      while (initializeGame(window, shaderProgram, planeShape, snakeShape,
+                            pointShape, font));
   }
 
   glfwTerminate();

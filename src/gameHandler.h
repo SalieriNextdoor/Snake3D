@@ -21,6 +21,7 @@ bool renderMainScreen(GLFWwindow *window, snake::Snake &snek, Point &point,
                       Score &score, Shader &shaderProgram, Shape3D &planeShape,
                       Shape3D &snakeShape, Shape3D &pointShape,
                       FontRenderer &font, glm::mat4 planeModel);
+bool renderStartScreen(GLFWwindow *window, FontRenderer &font);
 bool renderGameOverScreen(GLFWwindow *window, FontRenderer &font, Score &score);
 
 #endif

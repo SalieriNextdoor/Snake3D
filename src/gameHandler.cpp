@@ -110,13 +110,42 @@ bool renderMainScreen(GLFWwindow *window, snake::Snake &snek, Point &point,
   return false;
 }
 
+bool renderStartScreen(GLFWwindow *window, FontRenderer &font) {
+  double lastTime = glfwGetTime();
+  bool blink = true;
+  while (!glfwWindowShouldClose(window)) {
+    processInput(window, false);
+    if (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS) return true;
+
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    font.writeText("SNAKE3D", 0.8f, -0.85f, 0.45f, 0.3f, 0.5f, "texPos",
+                   "model");
+
+    double currentTime = glfwGetTime();
+    if (currentTime - lastTime > 1.0f) {
+      blink = !blink;
+      lastTime = currentTime;
+    }
+    if (blink)
+      font.writeText("PRESS ENTER TO START", 0.25f, -2.8f, -2.2f, 0.3f, 0.5f,
+                     "texPos", "model");
+
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+  }
+  return false;
+}
+
 bool renderGameOverScreen(GLFWwindow *window, FontRenderer &font,
                           Score &score) {
   double lastTime = glfwGetTime();
   bool blink = true;
   std::string scoreStr = std::to_string(score.getScore());
   while (!glfwWindowShouldClose(window)) {
-    if (processInput(window)) return true;
+    processInput(window, false);
+    if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) return true;
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
