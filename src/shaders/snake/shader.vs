@@ -1,3 +1,11 @@
+/*
+ * @file snake/shader.fs
+ * @copyright
+ * Copyright 2024 Rafael Spinassé
+ * Licensed under MIT license
+ *
+ * @brief Model vertex shader.
+ */
 #version 330 core
 
 layout (location = 0) in vec3 aPos;

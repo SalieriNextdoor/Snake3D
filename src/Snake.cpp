@@ -1,8 +1,18 @@
+/**
+ * @file SnakePart.cpp
+ * @copyright
+ * Copyright 2024 Rafael Spinassé
+ * Licensed under MIT license
+ *
+ * @brief Implements the class for the parts of the Snake.
+ */
 #include "Snake.h"
 
 #include <iostream>
 
 using SELF = snake::Snake;
+
+namespace snake {
 
 constexpr snake::movement invertDirection(const snake::movement dir) {
   switch (dir) {
@@ -23,8 +33,6 @@ constexpr bool floatEquality(float a, float b, float e) {
   return (a <= b + e && a >= b - e);
 }
 
-namespace snake {
-
 Snake::Snake(glm::vec3 startTransHead, int startingSize, float scale_factor,
              float increment_val, float borderx, float borderz,
              movement startDir)
@@ -38,6 +46,11 @@ Snake::Snake(glm::vec3 startTransHead, int startingSize, float scale_factor,
   for (int i = 1; i < startingSize; i++) addPart();
 }
 
+/**
+ * A new part is created and added to the back of the Snake's tail, with the
+ * same direction and position of the part preceding it. It is then moved once
+ * in the opposite direction, as to thus increase the size of the tail.
+ */
 SELF &Snake::addPart() {
   auto *last = parts.back();
   movement dir = last->getDirection();
@@ -50,12 +63,21 @@ SELF &Snake::addPart() {
   return *this;
 }
 
+/*
+ *The head's direction will not be changed in the case where the new direction
+ *is the opposite of its initial direction.
+ */
 SELF &Snake::updateDirection(movement newHeadDir) {
   if (newHeadDir != invertDirection(generalDirection))
     parts[0]->updateDirection(newHeadDir);
   return *this;
 }
 
+/**
+ * Each part of the Snake is moved according to the increment by a call to each
+ * part's move function. Afterwards, each part is updated with the direction of
+ * the part in front of it, with the exception of the head.
+ */
 SELF &Snake::move() {
   parts[0]->move(increment, borderx, borderz);
   movement old = parts[0]->getDirection();
@@ -68,6 +90,13 @@ SELF &Snake::move() {
   return *this;
 }
 
+/**
+ * A cube shape must be bound and a shader program must be active before this
+ * function is called.
+ * @see Shape3D
+ * @see Shader
+ * @see snake::SnakePart::draw
+ */
 SELF &Snake::draw(GLuint shaderID, const std::string &uniformName) {
   for (auto *part : parts) part->draw(shaderID, uniformName);
   return *this;
@@ -100,8 +129,10 @@ bool Snake::pointCollisionAll(const glm::vec3 &pointTrans) const {
   return false;
 }
 
+/**
+ * Deletes all of the previously created SnakePart associated with the Snake.
+ */
 Snake::~Snake() {
   for (auto *part : parts) delete part;
 }
-
 };  // namespace snake

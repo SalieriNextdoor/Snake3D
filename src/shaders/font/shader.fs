@@ -1,3 +1,11 @@
+/*
+ * @file font/shader.fs
+ * @copyright
+ * Copyright 2024 Rafael Spinassé
+ * Licensed under MIT license
+ *
+ * @brief Font fragment shader.
+ */
 #version 330 core
 
 out vec4 FragColor;

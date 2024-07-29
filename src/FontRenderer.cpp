@@ -1,7 +1,21 @@
+/**
+ * @file FontRenderer.cpp
+ * @copyright
+ * Copyright 2024 Rafael Spinassé
+ * Licensed under MIT license
+ *
+ * @brief Implements the class for the font renderer.
+ */
 #include "FontRenderer.h"
 
 using SELF = FontRenderer;
 
+/**
+ * The texture shifts occurs based on the given positions, which are then
+ * converted into coordinates according to the character and image dimensions.
+ *
+ * The coordinates are then passed to the uniform.
+ */
 SELF& FontRenderer::shiftTexture(const std::string& uniformName, int xpos,
                                  int ypos) {
   glm::vec2 finalPos{(float)xpos * xsize / width,
@@ -10,7 +24,12 @@ SELF& FontRenderer::shiftTexture(const std::string& uniformName, int xpos,
   return *this;
 }
 
-FontRenderer::FontRenderer(const char* texturePath, unsigned int textureNo,
+/**
+ * The font bitmap file is loaded and its width and height extracted.
+ *
+ * In the case the file is invalid, the error is logged to the terminal.
+ */
+FontRenderer::FontRenderer(const char* fontPath, unsigned int textureNo,
                            GLenum format, const Shape3D& _quadFontShape,
                            const Shader& _fontShader,
                            const std::string& fontTexUniformName, int _xsize,
@@ -39,18 +58,25 @@ FontRenderer::FontRenderer(const char* texturePath, unsigned int textureNo,
 
   int nrChannels;
   stbi_set_flip_vertically_on_load(true);
-  unsigned char* data = stbi_load(texturePath, &width, &height, &nrChannels, 0);
+  unsigned char* data = stbi_load(fontPath, &width, &height, &nrChannels, 0);
   if (data) {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format,
                  GL_UNSIGNED_BYTE, data);
   } else {
-    std::cout << "Failed to load texture at " << texturePath << std::endl;
+    std::cout << "Failed to load texture at " << fontPath << std::endl;
   }
   stbi_image_free(data);
 
   fontShader.setInt(fontTexUniformName, 0);
 }
 
+/**
+ * The shift occurs based on the given character and the sequence starting
+ * position, which are then converted to x and y axis positions.
+ *
+ * The function only accepts letters and numbers. Given otherwise, an error will
+ * be logged to the terminal.
+ */
 SELF& FontRenderer::shiftToChar(const char c, const std::string& uniformName) {
   int temp_pos;
   if (c >= '0' && c <= '9')
@@ -68,6 +94,13 @@ SELF& FontRenderer::shiftToChar(const char c, const std::string& uniformName) {
   return shiftTexture(uniformName, posx, posy);
 }
 
+/**
+ * The text is written character by character, with the given gap between
+ * characters and lines.
+ *
+ * A y line gap is given by a new line character in the string, and a space
+ * character is handled as an extra gap.
+ */
 SELF& FontRenderer::writeText(const std::string& text, float scaleFactor,
                               float startingPosX, float startingPosY,
                               float xgap, float ygap,

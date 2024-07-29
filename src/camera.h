@@ -1,3 +1,11 @@
+/**
+ * @file camera.h
+ * @copyright
+ * Copyright 2024 Rafael Spinassé
+ * Licensed under MIT license
+ *
+ * @brief Defines and implements the class for the camera.
+ */
 #ifndef CAMERA_H
 #define CAMERA_H
 
@@ -10,6 +18,9 @@
 const float YAW = 0.0f;
 const float PITCH = 0.0f;
 
+/**
+ * @brief Defines the methods for camera behavior.
+ */
 class Camera {
   using SELF = Camera;
 
@@ -20,6 +31,11 @@ class Camera {
   float yaw;
   float pitch;
 
+  /**
+   * @brief Updates the Camera up vector.
+   *
+   * @return reference to the object
+   */
   SELF& updateUp() {
     auto directionRight = glm::normalize(glm::cross(worldup, front));
     up = glm::normalize(glm::cross(front, directionRight));
@@ -27,6 +43,12 @@ class Camera {
     return *this;
   }
 
+  /**
+   * @brief Updates the Camera's direction vector, according to its rotation
+   * values.
+   *
+   * @return reference to the object
+   */
   SELF& updateDirection() {
     glm::vec3 frontv;
     float cospitch = (float)cos(glm::radians(pitch));
@@ -39,6 +61,14 @@ class Camera {
   }
 
  public:
+  /**
+   * @brief Constructor for the Camera.
+   *
+   * @param position starting position 3D vector
+   * @param up starting up 3D vector
+   * @param yaw starting yaw rotation value
+   * @param pitch starting pitch rotation value
+   */
   Camera(const glm::vec3& position = glm::vec3(0.0f, 0.0f, 0.0f),
          const glm::vec3& up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW,
          float pitch = PITCH)
@@ -50,44 +80,12 @@ class Camera {
     updateDirection();
   }
 
+  /**
+   * @brief Returns the Camera's view matrix.
+   *
+   * @return view matrix
+   */
   glm::mat4 lookAt() { return glm::lookAt(position, position + front, up); }
-
-  // move straight; speed > 0 frontward, otherwise backward
-  SELF& straight(float speed) {
-    position += front * speed;
-    return *this;
-  }
-
-  // move sideways; speed > 0 right, otherwise left
-  SELF& strafe(float speed) {
-    auto stp = glm::normalize(glm::cross(front, up));
-    position += stp * speed;
-    return *this;
-  }
-
-  SELF& updateYaw(float offset, bool doUpdate = true) {
-    yaw += offset;
-
-    return doUpdate ? updateDirection() : *this;
-  }
-
-  SELF& updatePitch(float offset, bool doUpdate = true,
-                    bool constrainPitch = true) {
-    pitch += offset;
-
-    if (constrainPitch) {
-      if (pitch > 89.0f)
-        pitch = 89.0f;
-      else if (pitch < -89.0f)
-        pitch = -89.0f;
-    }
-
-    return doUpdate ? updateDirection() : *this;
-  }
-
-  void printInfo() {
-    std::cout << "Yaw: " << yaw << "\nPitch: " << pitch << std::endl;
-  }
 };
 
 #endif

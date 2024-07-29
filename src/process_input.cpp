@@ -1,3 +1,11 @@
+/**
+ * @file process_input.cpp
+ * @copyright
+ * Copyright 2024 Rafael Spinassé
+ * Licensed under MIT license
+ *
+ * @brief Implements input and window processing functions.
+ */
 #include "process_input.h"
 
 #include <iostream>

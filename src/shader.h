@@ -1,3 +1,11 @@
+/**
+ * @file shader.h
+ * @copyright
+ * Copyright 2024 Rafael Spinassé
+ * Licensed under MIT license
+ *
+ * @brief Defines and implements the class for the shaders.
+ */
 #ifndef SHADER_H
 #define SHADER_H
 
@@ -11,10 +19,25 @@
 #include "Include/glm/gtc/matrix_transform.hpp"
 #include "Include/glm/gtc/type_ptr.hpp"
 
+/**
+ * @brief Defines the methods for Shader compilation and behavior.
+ */
 class Shader {
- public:
-  unsigned int ID;
+  using SELF = Shader;
 
+ public:
+  GLuint ID;
+
+  /**
+   * @brief Constructor for a shader.
+   *
+   * @param vertexPath path to the vertex GLSL file
+   * @param fragmentPath path to the fragment GLSL file
+   *
+   * The given files are read, compiled and linked into a shader program.
+   *
+   * Any errors are logged to the console.
+   */
   Shader(const char *vertexPath, const char *fragmentPath) {
     std::string vertexCode;
     std::string fragmentCode;
@@ -79,30 +102,77 @@ class Shader {
     glDeleteShader(fragment);
   }
 
-  void use() { glUseProgram(ID); }
+  /**
+   * @brief Use the shader program.
+   *
+   * @return reference to the object
+   */
+  SELF &use() {
+    glUseProgram(ID);
+    return *this;
+  }
 
+  /**
+   * @brief Set a bool uniform.
+   *
+   * @param name uniform name
+   * @param value given uniform value
+   */
   void setBool(const std::string &name, bool value) const {
     glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
   }
+  /**
+   * @brief Set an int uniform.
+   *
+   * @param name uniform name
+   * @param value given uniform value
+   */
   void setInt(const std::string &name, int value) const {
     glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
   }
+  /**
+   * @brief Set a float uniform.
+   *
+   * @param name uniform name
+   * @param value given uniform value
+   */
   void setFloat(const std::string &name, float value) const {
     glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
   }
+  /**
+   * @brief Set a 2D vector uniform.
+   *
+   * @param name uniform name
+   * @param value given uniform value
+   */
   void setv2fv(const std::string &name, glm::vec2 vec) const {
     glUniform2fv(glGetUniformLocation(ID, name.c_str()), 1,
                  glm::value_ptr(vec));
   }
+  /**
+   * @brief Set a 4D vector uniform.
+   *
+   * @param name uniform name
+   * @param value given uniform value
+   */
   void setv4fv(const std::string &name, glm::vec4 vec) const {
     glUniform4fv(glGetUniformLocation(ID, name.c_str()), 1,
                  glm::value_ptr(vec));
   }
+  /**
+   * @brief Set a 4D matrix uniform.
+   *
+   * @param name uniform name
+   * @param value given uniform value
+   */
   void setm4fv(const std::string &name, const glm::mat4 &mat) const {
     glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE,
                        glm::value_ptr(mat));
   }
 
+  /**
+   * @brief Destructor for the Shader, deleting the shader program.
+   */
   ~Shader() { glDeleteProgram(ID); }
 };
 

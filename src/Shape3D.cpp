@@ -1,7 +1,21 @@
+/**
+ * @file Shape3D.cpp
+ * @copyright
+ * Copyright 2024 Rafael Spinassé
+ * Licensed under MIT license
+ *
+ * @brief Implements the class for the 3D shape.
+ */
 #include "Shape3D.h"
 
 using SELF = Shape3D;
 
+/**
+ * Initializes the buffers and the vertex array for a 3D object defined by its
+ * vertex data and indice data.
+ *
+ * Vertex attributes must be handled separately afterwards.
+ */
 Shape3D::Shape3D(GLsizeiptr data_size, const void* data,
                  GLsizeiptr indices_size, const void* indices) {
   glGenVertexArrays(1, &VAO);

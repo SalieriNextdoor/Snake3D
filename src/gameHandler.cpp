@@ -1,3 +1,12 @@
+/**
+ * @file gameHandler.cpp
+ * @copyright
+ * Copyright 2024 Rafael Spinassé
+ * Licensed under MIT license
+ *
+ * @brief Implements functions related to handling game screens and
+ * initialization.
+ */
 #include "gameHandler.h"
 
 #include <random>
@@ -35,6 +44,7 @@ bool initializeGame(GLFWwindow *window, Shader &shaderProgram,
                         -modelConstants::scale_factor / 2),
               modelConstants::scale_factor};
 
+  // avoid a point spawning within the Snake
   while (snek.pointCollisionAll(point.getTrans())) {
     point = Point{glm::vec3(modelConstants::scale_factor * gen(rng) +
                                 modelConstants::scale_factor / 2 - 1,

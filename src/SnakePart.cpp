@@ -1,3 +1,12 @@
+/**
+ * @file SnakePart.cpp
+ * @copyright
+ * Copyright 2024 Rafael Spinassé
+ * Licensed under MIT license
+ *
+ * @brief Implements the class for the parts of the Snake.
+ */
+
 #include "SnakePart.h"
 
 using SELF = snake::SnakePart;
@@ -10,6 +19,11 @@ SnakePart::SnakePart(glm::vec3 startTrans, float scale_factor,
       scale{glm::vec3(scale_factor, scale_factor, scale_factor)},
       direction{startDir} {}
 
+/**
+ * According to the current direction, defines movement by the given
+ * increment in the corresponding axis. In the case the part goes beyond the
+ * border, makes it so the part is moved to the opposite side of the plane.
+ */
 SELF& SnakePart::move(float increment, float borderx, float borderz) {
   switch (direction) {
     case movement::RIGHT:
@@ -50,6 +64,12 @@ movement SnakePart::updateDirection(movement newDirection) {
   return old;
 }
 
+/**
+ * A cube shape must be bound and a shader program must be active before this
+ * function is called.
+ * @see Shape3D
+ * @see Shader
+ */
 SELF& SnakePart::draw(GLuint shaderID, const std::string& uniformName) {
   glm::mat4 model = glm::mat4(1.0f);
   model = glm::translate(model, trans);

@@ -1,9 +1,20 @@
+/**
+ * @file constants.h
+ * @copyright
+ * Copyright 2024 Rafael Spinassé
+ * Licensed under MIT license
+ *
+ * @brief Defines utility constants.
+ */
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
 #include "Include/glad/glad.h"
 #include "Include/glm/glm.hpp"
 
+/**
+ * @brief Constants related to game setting parameters.
+ */
 namespace settingConstants {
 
 const int window_width = 800;
@@ -14,6 +25,11 @@ const double delay = 0.5f;
 
 };  // namespace settingConstants
 
+/**
+ * @brief Constants related to the font bitmap file.
+ *
+ * @see FontRenderer
+ */
 namespace fontConstants {
 
 const int bitmap_width = 1024;
@@ -25,12 +41,22 @@ const int letter_seq_start = 33;
 
 };  // namespace fontConstants
 
+/**
+ * @brief Constants related to Score.
+ *
+ * @see Score
+ */
 namespace scoreConstants {
 
 const int max_score_digits = 3;
 
 };
 
+/**
+ * @brief Constants related to 3D model data definition.
+ *
+ * @see Shape3D
+ */
 namespace modelConstants {
 
 const float vertices_cube[] = {
@@ -65,7 +91,8 @@ const GLuint indices_cube[] = {0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7,
 
 const float vertices_quad[] = {
     0.2f,
-    0.2f * settingConstants::AR,
+    0.2f *
+        settingConstants::AR,  // multiplying by aspect ratio to make a square
     0.0f,
     (float)fontConstants::font_char_width / fontConstants::bitmap_width,
     1.0f,

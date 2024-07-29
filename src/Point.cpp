@@ -1,3 +1,11 @@
+/**
+ * @file Point.cpp
+ * @copyright
+ * Copyright 2024 Rafael Spinassé
+ * Licensed under MIT license
+ *
+ * @brief Implements the class for the Point.
+ */
 #include "Point.h"
 
 using SELF = Point;
@@ -7,6 +15,12 @@ Point::Point(glm::vec3 posTrans, float scale_factor)
 
 glm::vec3& Point::getTrans() { return trans; }
 
+/**
+ * A cube shape must be bound and a shader program must be active before this
+ * function is called.
+ * @see Shape3D
+ * @see Shader
+ */
 SELF& Point::draw(GLuint shaderID, const std::string& uniformName) {
   glm::mat4 model = glm::mat4(1.0f);
   model = glm::translate(model, trans);
