@@ -9,6 +9,8 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#include <string>
+
 #include "Include/glad/glad.h"
 #include "Include/glm/glm.hpp"
 
@@ -24,6 +26,19 @@ const float zoom = 45.0f;
 const double delay = 0.5f;
 
 };  // namespace settingConstants
+
+/**
+ * @brief Constants related to audio settings.
+ */
+namespace audioConstants {
+
+const std::string pcm_device = "default";
+const std::string game_music_path = "./assets/audio/game_music.wav";
+const std::string move_path = "./assets/audio/move.wav";
+const std::string food_path = "./assets/audio/food.wav";
+const std::string gameover_path = "./assets/audio/gameover.wav";
+
+};  // namespace audioConstants
 
 /**
  * @brief Constants related to the font bitmap file.

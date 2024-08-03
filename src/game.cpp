@@ -77,8 +77,12 @@ int main() {
                                   0.1f, 100.0f);
     shaderProgram.setm4fv("projection", projection);
 
-    FontRenderer font{"./images/font.bmp", 0,          GL_RGB,
-                      quadFontShape,       fontShader, "texture1"};
+    FontRenderer font{"./assets/images/font.bmp",
+                      0,
+                      GL_RGB,
+                      quadFontShape,
+                      fontShader,
+                      "texture1"};
 
     if (renderStartScreen(window, font))
       while (initializeGame(window, shaderProgram, planeShape, snakeShape,
