@@ -8,5 +8,7 @@ First, the directory Include must be created and library header folders for [gla
 Then, access the src directory within a Linux terminal or MinGW-w64 for Windows and run `make` to build.
 
 ## Build docs
-To build the documentation, it's need to have doxygen installed. Then, access the src directory and run `make docs`.
+To build the documentation, it's needed to have doxygen installed.
+
+Then, access the src directory and run `make docs`.
 
