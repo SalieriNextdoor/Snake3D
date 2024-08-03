@@ -1,7 +1,7 @@
 *.o
 game
 Include/
-Libs/
+glad.c
 build/
 audio/
 Docs/html/
