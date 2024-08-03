@@ -1,3 +1,11 @@
+/**
+ * @file AudioHandler.cpp
+ * @copyright
+ * Copyright 2024 Rafael Spinassé
+ * Licensed under MIT license
+ *
+ * @brief Implements the class for audio handling.
+ */
 #include "AudioHandler.h"
 
 #ifdef __linux__
@@ -5,6 +13,9 @@
 
 #include <cstdio>
 
+/**
+ * @brief Data related to a .wav file
+ */
 struct wav_file_data {
   unsigned long FileSize;
   unsigned short AudioFormat;
@@ -18,11 +29,14 @@ struct wav_file_data {
   FILE *SampledData;
 };
 
-template <typename T>
-inline T clamp(T val, T min, T max) {
-  return (val < min) ? min : ((val > max) ? max : val);
-}
-
+/**
+ * @brief Reads a given .wav file's header data.
+ *
+ * @param file_path path to the .wav file
+ * @param data to be filled from header
+ *
+ * @return whether or not the operation was a success
+ */
 bool wav_read(const char *file_path, wav_file_data *data) {
   FILE *audio;
   int nread;
@@ -267,7 +281,6 @@ bool AudioHandler::playAudio(const std::string &filePath, double volume) {
     }
   }
 
-  // snd_pcm_drain(playback_handle);
   while (snd_pcm_avail_update(playback_handle) > 0 && play_audio);
   snd_pcm_close(playback_handle);
 
@@ -277,6 +290,14 @@ bool AudioHandler::playAudio(const std::string &filePath, double volume) {
   return play_audio;
 }
 
+void AudioHandler::activateAudio() { play_audio = true; }
+void AudioHandler::stopAudio() { play_audio = false; }
+
+#else
+
+bool AudioHandler::playAudio(const std::string &filePath, double volume) {
+  return false;
+}
 void AudioHandler::activateAudio() { play_audio = true; }
 void AudioHandler::stopAudio() { play_audio = false; }
 
